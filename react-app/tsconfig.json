@@ -1,4 +1,9 @@
 {
+  "compilerOptions": {
+    // ... other options
+    "jsx": "react-jsx",
+    "module": "esnext" // or a compatible module setting
+  },
   "files": [],
   "references": [
     { "path": "./tsconfig.app.json" },
