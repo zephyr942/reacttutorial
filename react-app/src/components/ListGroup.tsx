@@ -1,6 +1,6 @@
 function ListGroup() {
   let items = ["New York", "San Francisco", "Tokyo", "London", "Berlin"];
-  items = [];
+  // items = [];
 
   /* //for practice
   const message = items.length === 0 ? <p>No items found</p> : null;
@@ -12,7 +12,7 @@ function ListGroup() {
     <>
       <h1>List</h1>
       {items.length === 0 && <p>No items found</p>}
-      //for practice
+
       {/* {message} */}
       {/* {items.length === 0 && getMessage()} */}
       <ul className="list-group">
