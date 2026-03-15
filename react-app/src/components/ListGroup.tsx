@@ -1,8 +1,12 @@
 import { useState } from "react";
 
-function ListGroup() {
-  let items = ["New York", "San Francisco", "Tokyo", "London", "Berlin"];
+//{items:[], heading:string}
+interface ListGroupItem {
+  items: string[];
+  heading: string;
+}
 
+function ListGroup({ items, heading }: ListGroupItem) {
   const [selectIndex, setSelectIndex] = useState(-1);
 
   // items = [];
@@ -20,7 +24,7 @@ function ListGroup() {
 
   return (
     <>
-      <h1>List</h1>
+      <h1>{heading}</h1>
       {items.length === 0 && <p>No items found</p>}
 
       {/* {message} */}
