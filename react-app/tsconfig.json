@@ -2,7 +2,8 @@
   "compilerOptions": {
     // ... other options
     "jsx": "react-jsx",
-    "module": "esnext" // or a compatible module setting
+    "module": "esnext", // or a compatible module setting
+    "erasableSyntaxOnly": false
   },
   "files": [],
   "references": [
