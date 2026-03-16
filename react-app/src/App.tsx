@@ -5,7 +5,7 @@ function App() {
     <div>
       <Alert>
         <p>
-          <h1>text</h1>
+          hello
         </p>
       </Alert>
     </div>
