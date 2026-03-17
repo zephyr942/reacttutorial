@@ -1,14 +1,27 @@
+import { useState } from "react";
 import Alert from "./components/Alert";
 import Button from "./components/Button";
 
 function App() {
+  const [isAlertVisible, setIsAlertVisible] = useState(false);
+
   return (
     <div>
-      <Alert>
-        <p>hello</p>
-      </Alert>
+      {isAlertVisible && (
+        <Alert
+          isDismissing={true}
+          handleCloseBtn={() => setIsAlertVisible(false)}
+        >
+          <div>hello</div>
+        </Alert>
+      )}
 
-      <Button selectBtnType="primary">Submit</Button>
+      <Button
+        selectBtnType="primary"
+        handleClick={() => setIsAlertVisible(true)}
+      >
+        My Button
+      </Button>
     </div>
   );
 }
