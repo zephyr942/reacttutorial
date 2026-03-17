@@ -1,29 +1,43 @@
-import { useState } from "react";
-import Alert from "./components/Alert";
-import Button from "./components/Button";
+import ListGroup from "./components/ListGroup";
 
 function App() {
-  const [isAlertVisible, setIsAlertVisible] = useState(false);
+  let items = ["New York", "San Francisco", "Tokyo", "London", "Berlin"];
+
+  const handleSelectItem = (item: string) => {
+    console.log(item);
+  };
 
   return (
     <div>
-      {isAlertVisible && (
-        <Alert
-          isDismissing={true}
-          handleCloseBtn={() => setIsAlertVisible(false)}
-        >
-          <div>hello</div>
-        </Alert>
-      )}
-
-      <Button
-        selectBtnType="primary"
-        handleClick={() => setIsAlertVisible(true)}
-      >
-        My Button
-      </Button>
+      <ListGroup
+        items={items}
+        heading="Cities"
+        onSelectItem={handleSelectItem}
+      />
     </div>
   );
+
+  // const [isAlertVisible, setIsAlertVisible] = useState(false);
+
+  // return (
+  //   <div>
+  //     {isAlertVisible && (
+  //       <Alert
+  //         isDismissing={true}
+  //         handleCloseBtn={() => setIsAlertVisible(false)}
+  //       >
+  //         <div>hello</div>
+  //       </Alert>
+  //     )}
+
+  //     <Button
+  //       selectBtnType="primary"
+  //       handleClick={() => setIsAlertVisible(true)}
+  //     >
+  //       My Button
+  //     </Button>
+  //   </div>
+  // );
 }
 
 export default App;
