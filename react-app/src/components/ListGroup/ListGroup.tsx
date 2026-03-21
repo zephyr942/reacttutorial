@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./ListGroup.css";
+import styles from "./ListGroup.module.css";
 
 //{items:[], heading:string}
 interface ListGroupItem {
@@ -32,7 +32,7 @@ function ListGroup({ items, heading, onSelectItem }: ListGroupItem) {
 
       {/* {message} */}
       {/* {items.length === 0 && getMessage()} */}
-      <ul className="list-group">
+      <ul className={[styles.listGroup, styles.container].join("")}>
         {items.map((item, index) => (
           <li
             className={
