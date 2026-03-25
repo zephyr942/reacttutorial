@@ -1,0 +1,13 @@
+.btn {
+  width: 200px;
+  height: 80px;
+  padding: 8px 10px;
+  border-radius: 20px;
+  font-size: large;
+  font-weight: bold;
+}
+
+.btn-primary {
+  background: blue;
+  color: white;
+}
