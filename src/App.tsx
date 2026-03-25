@@ -4,6 +4,7 @@ import { AiFillApple } from "react-icons/ai";
 import { useState } from "react";
 import Button from "./components/Button/Button";
 import Alert from "./components/Alert";
+import LikeBTN from "./LikeButton/LikeBTN";
 
 function App() {
   let items = ["New York", "San Francisco", "Tokyo", "London", "Berlin"];
@@ -29,7 +30,7 @@ function App() {
 
   return (
     <div>
-      {isAlertVisible && (
+      {/* {isAlertVisible && (
         <Alert
           isDismissing={true}
           handleCloseBtn={() => setIsAlertVisible(false)}
@@ -43,7 +44,12 @@ function App() {
         handleClick={() => setIsAlertVisible(true)}
       >
         My Button
-      </Button>
+      </Button> */}
+      <LikeBTN
+        likeColor="red"
+        likeSize={40}
+        onClick={() => console.log("Clicked!")}
+      />
     </div>
   );
 }
