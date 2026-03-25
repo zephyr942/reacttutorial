@@ -1,5 +1,6 @@
 import ListGroup from "./components/ListGroup";
 import "./App.css";
+import { AiFillApple } from "react-icons/ai";
 
 function App() {
   let items = ["New York", "San Francisco", "Tokyo", "London", "Berlin"];
@@ -10,6 +11,9 @@ function App() {
 
   return (
     <div>
+      {/*icon test*/}
+      <AiFillApple color="blue" size={30} />
+
       <ListGroup
         items={items}
         heading="Cities"
