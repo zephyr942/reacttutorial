@@ -16,23 +16,34 @@ function App() {
   const [isAlertVisible, setIsAlertVisible] = useState(false);
 
   //practice
-  const [drink, setDrink] = useState({
-    title: "coffee",
-    price: 5,
-  });
+  // const [drink, setDrink] = useState({
+  //   title: "coffee",
+  //   price: 5,
+  // });
 
-  function handleDrink() {
-    setDrink({ ...drink, price: 6 });
+  const [feelings, setFeeling] = useState(["happy", "Sadness", "Anger"]);
+
+  function handleClick() {
+    //updating
+    setFeeling([...feelings, "lonely"]);
+
+    //remove
+    setFeeling(feelings.filter((feeling) => feeling !== "happy"));
+
+    //replacement
+    setFeeling(
+      feelings.map((feeling) => (feeling === "happy" ? "happiness" : feeling)),
+    );
   }
 
   return (
     <div>
-      {drink.price}
+      {feelings}
       <LikeBTN
         likeColor="red"
         likeSize={40}
         onClick={() => {
-          handleDrink();
+          handleClick();
         }}
       />
     </div>
