@@ -13,42 +13,27 @@ function App() {
     console.log(item);
   };
 
-  // return (
-  //   <div>
-  //     {/*icon test*/}
-  //     <AiFillApple color="blue" size={30} />
-
-  //     <ListGroup
-  //       items={items}
-  //       heading="Cities"
-  //       onSelectItem={handleSelectItem}
-  //     />
-  //   </div>
-  // );
-
   const [isAlertVisible, setIsAlertVisible] = useState(false);
+
+  //practice
+  const [drink, setDrink] = useState({
+    title: "coffee",
+    price: 5,
+  });
+
+  function handleDrink() {
+    setDrink({ ...drink, price: 6 });
+  }
 
   return (
     <div>
-      {/* {isAlertVisible && (
-        <Alert
-          isDismissing={true}
-          handleCloseBtn={() => setIsAlertVisible(false)}
-        >
-          <div>hello</div>
-        </Alert>
-      )}
-
-      <Button
-        selectBtnType="primary"
-        handleClick={() => setIsAlertVisible(true)}
-      >
-        My Button
-      </Button> */}
+      {drink.price}
       <LikeBTN
         likeColor="red"
         likeSize={40}
-        onClick={() => console.log("Clicked!")}
+        onClick={() => {
+          handleDrink();
+        }}
       />
     </div>
   );
