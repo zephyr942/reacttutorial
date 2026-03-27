@@ -10,25 +10,23 @@ import Cart from "./components/Cart";
 import NavBar from "./components/NavBar";
 
 function App() {
-  const [game, setGame] = useState({
-    id: 1,
-    player: {
-      name: "John",
-    },
+  const [pizza, setPizza] = useState({
+    name: "Spicy Pepperoni",
+    toppings: ["Mushroom"],
   });
 
   function handleClick() {
-    // setGame({ ...game, player: { ...game.player, name: "bob" } });
+    // setPizza({ ...pizza, toppings: [...pizza.toppings, "Cheese"] });
 
     // immer way
-    setGame(
+    setPizza(
       produce((draft) => {
-        const newPlayer = draft.player;
-        if (newPlayer) newPlayer.name = "Bob";
+        const newPizza = draft.name === "Spicy Pepperoni" ? draft : null;
+        if (newPizza) newPizza.toppings = [...newPizza.toppings, "Cheese"];
       }),
     );
 
-    console.log(game);
+    console.log(pizza);
   }
 
   return (
