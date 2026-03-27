@@ -5,6 +5,7 @@ import { useState } from "react";
 import Button from "./components/Button/Button";
 import Alert from "./components/Alert";
 import LikeBTN from "./LikeButton/LikeBTN";
+import { produce } from "immer";
 
 function App() {
   let items = ["New York", "San Francisco", "Tokyo", "London", "Berlin"];
@@ -43,12 +44,22 @@ function App() {
 
   function handleArray() {
     console.log("bugs", bugs);
-    setBugs(bugs.map((bug) => (bug.id === 1 ? { ...bug, fixed: true } : bug)));
+    // setBugs(bugs.map((bug) => (bug.id === 1 ? { ...bug, fixed: true } : bug)));
+    setBugs(
+      produce((draft) => {
+        const bug = draft.find((bug) => bug.id === 1);
+        if (bug) bug.fixed = true;
+      }),
+    );
   }
 
   return (
     <div>
-      {feelings}
+      {bugs.map((bug) => (
+        <p key={bug.id}>
+          {bug.title} {bug.fixed ? "fixed" : "new"}
+        </p>
+      ))}
       <LikeBTN
         likeColor="red"
         likeSize={40}
