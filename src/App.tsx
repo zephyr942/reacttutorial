@@ -19,20 +19,23 @@ function App() {
   });
 
   function handleClick() {
-    setCart({
-      ...cart,
-      items: cart.items.map((item) =>
-        item.id === 2 ? { ...item, quantity: 2 } : item,
-      ),
-    });
+    // setCart({
+    //   ...cart,
+    //   items: cart.items.map((item) =>
+    //     item.id === 2 ? { ...item, quantity: 2 } : item,
+    //   ),
+    // });
 
     // immer way
-    // setPizza(
-    //   produce((draft) => {
-    //     const newPizza = draft.name === "Spicy Pepperoni" ? draft : null;
-    //     if (newPizza) newPizza.toppings = [...newPizza.toppings, "Cheese"];
-    //   }),
-    // );
+    setCart(
+      produce((draft) => {
+        const newCartItems = draft.items;
+        if (newCartItems)
+          return newCartItems.map((item) =>
+            item.id === 2 ? { ...item, quantity: 2 } : item,
+          );
+      }),
+    );
 
     console.log(cart);
   }
