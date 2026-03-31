@@ -1,8 +1,13 @@
-import React from "react";
+import React, { type FormEvent } from "react";
 
 const Form = () => {
+  function handleSubmmit(event: FormEvent) {
+    event.preventDefault();
+    console.log("Submitted!");
+  }
+
   return (
-    <form>
+    <form onSubmit={handleSubmmit}>
       <div className="mb-3">
         <label htmlFor="" className="form-label">
           Name
