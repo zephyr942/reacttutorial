@@ -10,13 +10,14 @@ import Cart from "./components/Cart";
 import NavBar from "./components/NavBar";
 import ExpandableText from "./components/ExpandableText";
 import Form from "./components/Form";
+import ExpenseTracker from "./components/ExpenseTracker";
 
 function App() {
   function handleClick() {}
 
   return (
     <>
-      <Form />
+      <ExpenseTracker />
     </>
   );
 }
