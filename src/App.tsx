@@ -13,6 +13,8 @@ import Form from "./components/Form";
 import ExpenseTracker from "./ExpenseTracker/components/ExpenseTracker";
 import ExpenseList from "./ExpenseTracker/components/ExpenseList";
 import ExpenseFilter from "./ExpenseTracker/components/ExpenseFilter";
+import ExpenseForm from "./ExpenseTracker/components/ExpenseForm";
+import categories from "./ExpenseTracker/categories";
 
 function App() {
   function handleClick() {}
@@ -39,7 +41,13 @@ function App() {
 
   return (
     <>
-      <ExpenseTracker />
+      <div className="mb-3">
+        <ExpenseForm
+          submitExpense={(expense) => {
+            setExpenses([...expenses, { ...expense, id: expenses.length + 1 }]);
+          }}
+        />
+      </div>
       <div className="mb-3">
         <ExpenseFilter
           onSelectCategory={(category) => setSelectedCatgory(category)}
