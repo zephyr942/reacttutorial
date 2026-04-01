@@ -12,10 +12,12 @@ import ExpandableText from "./components/ExpandableText";
 import Form from "./components/Form";
 import ExpenseTracker from "./ExpenseTracker/components/ExpenseTracker";
 import ExpenseList from "./ExpenseTracker/components/ExpenseList";
+import ExpenseFilter from "./ExpenseTracker/components/ExpenseFilter";
 
 function App() {
   function handleClick() {}
 
+  const [selectedCategory, setSelectedCatgory] = useState("");
   const [expenses, setExpenses] = useState([
     {
       id: 1,
@@ -27,6 +29,10 @@ function App() {
     { id: 3, description: "Electricity", amount: 100, category: "Utilities" },
   ]);
 
+  const visibleExpenses = selectedCategory
+    ? expenses.filter((expense) => expense.category === selectedCategory)
+    : expenses;
+
   // const onDelete = (selectItem: FormData) => {
   //   setExpenses(expenses.filter((expense) => expense.id !== selectItem.id));
   // };
@@ -34,8 +40,13 @@ function App() {
   return (
     <>
       <ExpenseTracker />
+      <div className="mb-3">
+        <ExpenseFilter
+          onSelectCategory={(category) => setSelectedCatgory(category)}
+        />
+      </div>
       <ExpenseList
-        expenses={expenses}
+        expenses={visibleExpenses}
         onDelete={(id) =>
           setExpenses(expenses.filter((expense) => expense.id !== id))
         }
