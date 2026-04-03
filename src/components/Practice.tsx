@@ -7,7 +7,7 @@ interface User {
 }
 
 const Practice = () => {
-  const [users, setUsers] = useState<User[]>();
+  const [users, setUsers] = useState<User[]>([]); //initialisation is very important
   const [error, setError] = useState("");
   const [isLoding, setLoading] = useState(false);
 
@@ -30,12 +30,38 @@ const Practice = () => {
     return () => controller.abort();
   }, []);
 
+  const deleteUser = (user: User) => {
+    const originalUsers = [...users];
+
+    setUsers(users.filter((u) => u.id !== user.id));
+
+    axios
+      .delete("https://jsonplaceholder.typicode.com/users/" + user.id)
+      .catch((err) => {
+        setError(err.message);
+        setUsers(originalUsers);
+      });
+  };
+
   return (
     <>
       {isLoding && <div className="spinner-border"></div>}
       {error && <p className="text-danger">{error}</p>}
-      {users?.map((user) => (
-        <li key={user.id}>{user.name}</li>
+      {users.map((user) => (
+        <ul className="list-group">
+          <li
+            key={user.id}
+            className="list-group-item d-flex justify-content-between"
+          >
+            {user.name}
+            <button
+              className="btn btn-outline-danger"
+              onClick={() => deleteUser(user)}
+            >
+              Delete
+            </button>
+          </li>
+        </ul>
       ))}
     </>
   );
