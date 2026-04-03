@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import axios, { AxiosError, CanceledError } from "axios";
+import axios, { AxiosError } from "axios";
+import apiClient, { CanceledError } from "../services/api-client";
 
 interface User {
   id: number;
@@ -14,8 +15,8 @@ const Practice = () => {
   useEffect(() => {
     const controller = new AbortController(); //avoid that the request send to the server twice
     setLoading(true);
-    axios
-      .get<User[]>("https://jsonplaceholder.typicode.com/users", {
+    apiClient
+      .get<User[]>("/users", {
         signal: controller.signal,
       })
       .then((res) => {
@@ -35,12 +36,10 @@ const Practice = () => {
 
     setUsers(users.filter((u) => u.id !== user.id));
 
-    axios
-      .delete("https://jsonplaceholder.typicode.com/users/" + user.id)
-      .catch((err) => {
-        setError(err.message);
-        setUsers(originalUsers);
-      });
+    apiClient.delete("/users/" + user.id).catch((err) => {
+      setError(err.message);
+      setUsers(originalUsers);
+    });
   };
 
   const addUser = () => {
@@ -48,8 +47,8 @@ const Practice = () => {
     const newUser = { id: 0, name: "Zephyr" };
     setUsers([newUser, ...users]);
 
-    axios
-      .post("https://jsonplaceholder.typicode.com/users", newUser)
+    apiClient
+      .post("/users", newUser)
       .then(({ data: saveUser }) => {
         //destructed the response to {data}  = const {data} = response
         setUsers([saveUser, ...users]);
@@ -64,15 +63,10 @@ const Practice = () => {
     const originalUsers = [...users];
     const updatedUser = { ...user, name: user.name + "!" };
     setUsers(users.map((u) => (u.id === user.id ? updatedUser : u)));
-    axios
-      .patch(
-        "https://jsonplaceholder.typicode.com/users/" + user.id,
-        updatedUser,
-      )
-      .catch((err) => {
-        setError(err.message);
-        setUsers(originalUsers);
-      });
+    apiClient.patch("/users/" + user.id, updatedUser).catch((err) => {
+      setError(err.message);
+      setUsers(originalUsers);
+    });
   };
 
   return (
