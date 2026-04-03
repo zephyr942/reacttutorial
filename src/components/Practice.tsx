@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 interface User {
   id: number;
@@ -11,12 +11,26 @@ const Practice = () => {
   const [error, setErr] = useState("");
 
   useEffect(() => {
-    axios
-      .get<User[]>("https://jsonplaceholder.typicode.com/xusers")
-      .then((res) => setUsers(res.data))
-      .catch((err) => {
-        setErr(err.message);
-      });
+    //Standard but ugly solution
+    const fetchUsers = async () => {
+      try {
+        const res = await axios.get<User[]>(
+          "https://jsonplaceholder.typicode.com/xusers",
+        );
+        setUsers(res.data);
+      } catch (error) {
+        setErr((error as AxiosError).message);
+      }
+    };
+    fetchUsers();
+
+    //better way
+    // axios
+    //   .get<User[]>("https://jsonplaceholder.typicode.com/xusers")
+    //   .then((res) => setUsers(res.data))
+    //   .catch((err) => {
+    //     setErr(err.message);
+    //   });
   }, []);
 
   return (
