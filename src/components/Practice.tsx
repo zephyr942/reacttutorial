@@ -63,6 +63,7 @@ const Practice = () => {
     const originalUsers = [...users];
     const updatedUser = { ...user, name: user.name + "!" };
     setUsers(users.map((u) => (u.id === user.id ? updatedUser : u)));
+
     apiClient.patch("/users/" + user.id, updatedUser).catch((err) => {
       setError(err.message);
       setUsers(originalUsers);
