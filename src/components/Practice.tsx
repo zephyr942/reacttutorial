@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import axios, { AxiosError } from "axios";
+import axios, { AxiosError, CanceledError } from "axios";
 
 interface User {
   id: number;
@@ -8,34 +8,25 @@ interface User {
 
 const Practice = () => {
   const [users, setUsers] = useState<User[]>();
-  const [error, setErr] = useState("");
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    //Standard but ugly solution
-    const fetchUsers = async () => {
-      try {
-        const res = await axios.get<User[]>(
-          "https://jsonplaceholder.typicode.com/xusers",
-        );
-        setUsers(res.data);
-      } catch (error) {
-        setErr((error as AxiosError).message);
-      }
-    };
-    fetchUsers();
-
-    //better way
-    // axios
-    //   .get<User[]>("https://jsonplaceholder.typicode.com/xusers")
-    //   .then((res) => setUsers(res.data))
-    //   .catch((err) => {
-    //     setErr(err.message);
-    //   });
+    const controller = new AbortController(); //avoid that the request send to the server twice
+    axios
+      .get<User[]>("https://jsonplaceholder.typicode.com/users", {
+        signal: controller.signal,
+      })
+      .then((res) => setUsers(res.data))
+      .catch((err) => {
+        if (err instanceof CanceledError) return; //don't show the first cancel text
+        setError(err.message);
+      });
+    return () => controller.abort();
   }, []);
 
   return (
     <>
-      {error && <p className="text-danger">{err}</p>}
+      {error && <p className="text-danger">{error}</p>}
       {users?.map((user) => (
         <li key={user.id}>{user.name}</li>
       ))}
