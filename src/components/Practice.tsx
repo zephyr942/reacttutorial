@@ -43,10 +43,29 @@ const Practice = () => {
       });
   };
 
+  const addUser = () => {
+    const originalUsers = [...users];
+    const newUser = { id: 0, name: "Zephyr" };
+    setUsers([newUser, ...users]);
+
+    axios
+      .post("https://jsonplaceholder.typicode.com/users", newUser)
+      .then(({ data: saveUser }) => {//destructed the response to {data}  = const {data} = response
+        setUsers([saveUser, ...users]);
+      })
+      .catch((err) => {
+        setError(err.mesage);
+        setUsers(originalUsers);
+      });
+  };
+
   return (
     <>
       {isLoding && <div className="spinner-border"></div>}
       {error && <p className="text-danger">{error}</p>}
+      <button className="btn btn-primary mb-3" onClick={addUser}>
+        Add
+      </button>
       {users.map((user) => (
         <ul className="list-group">
           <li
