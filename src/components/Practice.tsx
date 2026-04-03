@@ -1,17 +1,17 @@
 import React, { useEffect, useRef } from "react";
 
 const Practice = () => {
-  const ref = useRef<HTMLInputElement>(null);
+  const connecting = () => console.log("Connecting");
+
+  const disconneting = () => console.log("Disconnecting");
 
   useEffect(() => {
-    if (ref.current) ref.current.focus();
+    connecting();
+    return () => disconneting();
   });
 
-  useEffect(() => {
-    document.title = "My Nice App";
-  });
 
-  return <input ref={ref} type="text" className="form-control" />;
+  return <></>;
 };
 
 export default Practice;
