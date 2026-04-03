@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./App.css";
-import Practice from "./components/practice";
+import Practice from "./components/Practice";
 import ProductList from "./components/ProductList";
 
 function App() {

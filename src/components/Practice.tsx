@@ -1,11 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios, { AxiosError } from "axios";
-import apiClient, { CanceledError } from "../services/api-client";
-
-interface User {
-  id: number;
-  name: string;
-}
+import  { CanceledError } from "../services/api-client";
+import type { User } from "../services/user-services";
+import userServices from "../services/user-services";
 
 const Practice = () => {
   const [users, setUsers] = useState<User[]>([]); //initialisation is very important
@@ -13,12 +10,9 @@ const Practice = () => {
   const [isLoding, setLoading] = useState(false);
 
   useEffect(() => {
-    const controller = new AbortController(); //avoid that the request send to the server twice
     setLoading(true);
-    apiClient
-      .get<User[]>("/users", {
-        signal: controller.signal,
-      })
+    const { request, cancel } = userServices.getAllUsers();
+    request
       .then((res) => {
         setUsers(res.data);
         setLoading(false);
@@ -28,15 +22,14 @@ const Practice = () => {
         setError(err.message);
         setLoading(false);
       });
-    return () => controller.abort();
+    return () => cancel();
   }, []);
 
   const deleteUser = (user: User) => {
     const originalUsers = [...users];
-
     setUsers(users.filter((u) => u.id !== user.id));
 
-    apiClient.delete("/users/" + user.id).catch((err) => {
+    userServices.deleteUser(user.id).catch((err) => {
       setError(err.message);
       setUsers(originalUsers);
     });
@@ -47,14 +40,14 @@ const Practice = () => {
     const newUser = { id: 0, name: "Zephyr" };
     setUsers([newUser, ...users]);
 
-    apiClient
-      .post("/users", newUser)
+    userServices
+      .createUser(newUser)
       .then(({ data: saveUser }) => {
         //destructed the response to {data}  = const {data} = response
         setUsers([saveUser, ...users]);
       })
       .catch((err) => {
-        setError(err.mesage);
+        setError(err.message);
         setUsers(originalUsers);
       });
   };
@@ -63,8 +56,7 @@ const Practice = () => {
     const originalUsers = [...users];
     const updatedUser = { ...user, name: user.name + "!" };
     setUsers(users.map((u) => (u.id === user.id ? updatedUser : u)));
-
-    apiClient.patch("/users/" + user.id, updatedUser).catch((err) => {
+    userServices.updateUser(updatedUser).catch((err) => {
       setError(err.message);
       setUsers(originalUsers);
     });
