@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios, { AxiosError } from "axios";
-import  { CanceledError } from "../services/api-client";
+import { CanceledError } from "../services/api-client";
 import type { User } from "../services/user-services";
 import userServices from "../services/user-services";
 
@@ -11,7 +11,7 @@ const Practice = () => {
 
   useEffect(() => {
     setLoading(true);
-    const { request, cancel } = userServices.getAllUsers();
+    const { request, cancel } = userServices.getAll<User>();
     request
       .then((res) => {
         setUsers(res.data);
@@ -29,7 +29,7 @@ const Practice = () => {
     const originalUsers = [...users];
     setUsers(users.filter((u) => u.id !== user.id));
 
-    userServices.deleteUser(user.id).catch((err) => {
+    userServices.delete(user.id).catch((err) => {
       setError(err.message);
       setUsers(originalUsers);
     });
@@ -41,7 +41,7 @@ const Practice = () => {
     setUsers([newUser, ...users]);
 
     userServices
-      .createUser(newUser)
+      .create(newUser)
       .then(({ data: saveUser }) => {
         //destructed the response to {data}  = const {data} = response
         setUsers([saveUser, ...users]);
@@ -56,7 +56,7 @@ const Practice = () => {
     const originalUsers = [...users];
     const updatedUser = { ...user, name: user.name + "!" };
     setUsers(users.map((u) => (u.id === user.id ? updatedUser : u)));
-    userServices.updateUser(updatedUser).catch((err) => {
+    userServices.update(updatedUser).catch((err) => {
       setError(err.message);
       setUsers(originalUsers);
     });
